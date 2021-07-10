@@ -2,7 +2,9 @@
 
 Book's author [repository](https://github.com/michaeljamesfitzgerald/Introducing-Regular-Expressions).
 
-rebar3 projects related by chapters:
+[RegexPal](https://www.regexpal.com/)
+
+## rebar3 projects related by chapters
 
 [Chapter 1](code/ch01)
 
