@@ -12,7 +12,11 @@ Create new project
 	
 EUnit
 -----
-	$ rebar3 eunit -v -m tel_number_tests
+	$ rebar3 eunit -v
+	$ rebar3 eunit -v -m tel_number_01_tests
+	$ rebar3 eunit -v -m tel_number_06_capturing_groups_tests
+	$ rebar3 eunit -v -m tel_number_08_quantifiers_tests
+	$ rebar3 eunit -v -m tel_number_09_quating_literals_tests
 
 
 Build
