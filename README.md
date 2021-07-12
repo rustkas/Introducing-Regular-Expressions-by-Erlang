@@ -1,4 +1,4 @@
-# Introducing Regular Expressions
+# Introducing Regular Expressions in Erlang
 
 Book's author [repository](https://github.com/michaeljamesfitzgerald/Introducing-Regular-Expressions).
 
