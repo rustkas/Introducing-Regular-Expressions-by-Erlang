@@ -11,10 +11,12 @@ Create new project
 EUnit
 -----
 	$ rebar3 eunit -v
-	$ rebar3 eunit -v -m read_file_01_tests
-	$ rebar3 eunit -v -m ignore_case_01_tests
-	$ rebar3 eunit -v -m maching_digits_01_tests
-	$ rebar3 eunit -v -m maching_non_digits_01_tests
+	$ rebar3 eunit -v -m tests_05_maching_word_characters_tests
+	$ rebar3 eunit -v -m tests_06_maching_non_word_characters_tests
+	$ rebar3 eunit -v -m tests_07_word_boundary_tests
+	$ rebar3 eunit -v -m tests_08_alert_tests
+	$ rebar3 eunit -v -m tests_09_backspace_character_tests
+	
 
 Build
 -----

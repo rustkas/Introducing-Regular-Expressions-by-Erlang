@@ -1,4 +1,4 @@
--module(ignore_case_01_tests).
+-module(tests_03_ignore_case_tests).
 
 %%
 %% Tests

@@ -1,4 +1,4 @@
--module(maching_non_digits_01_tests).
+-module(tests_04_maching_non_digits_tests).
 
 %%
 %% Tests
@@ -79,8 +79,8 @@ maching_non_digits_list_02_test() ->
 
 maching_non_digits_list_03_test() ->
     Expected = true,
-	% select all ASCII characters except numbers
-    InputList1 = lists:seq(0, 255) -- lists:seq(48,57),
+    % select all ASCII characters except numbers
+    InputList1 = lists:seq(0, 255) -- lists:seq(48, 57),
     %?debugFmt("~p~n",[InputList1]),
     RegularExpression = "\\D",
     {ok, MP} = re:compile(RegularExpression),

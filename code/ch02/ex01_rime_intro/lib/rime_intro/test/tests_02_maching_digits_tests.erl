@@ -1,4 +1,4 @@
--module(maching_digits_01_tests).
+-module(tests_02_maching_digits_tests).
 
 %%
 %% Tests

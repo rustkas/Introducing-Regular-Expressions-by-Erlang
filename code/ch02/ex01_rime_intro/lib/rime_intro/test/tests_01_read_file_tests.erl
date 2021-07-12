@@ -1,4 +1,4 @@
--module(read_file_01_tests).
+-module(tests_01_read_file_tests).
 
 %%
 %% Tests
