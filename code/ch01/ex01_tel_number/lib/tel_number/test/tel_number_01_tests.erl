@@ -34,5 +34,7 @@ numbers_04_newline_test() ->
     RegularExpression = InputString,
     {ok, MP} = re:compile(RegularExpression,[{newline, crlf}]),
     Expected = re:run(InputString, MP, [{newline, crlf},{capture,all,list},global]).
+
+
 	
 -endif.

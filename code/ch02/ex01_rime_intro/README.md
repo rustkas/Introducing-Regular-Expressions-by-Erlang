@@ -12,6 +12,9 @@ EUnit
 -----
 	$ rebar3 eunit -v
 	$ rebar3 eunit -v -m read_file_01_tests
+	$ rebar3 eunit -v -m ignore_case_01_tests
+	$ rebar3 eunit -v -m maching_digits_01_tests
+	$ rebar3 eunit -v -m maching_non_digits_01_tests
 
 Build
 -----
