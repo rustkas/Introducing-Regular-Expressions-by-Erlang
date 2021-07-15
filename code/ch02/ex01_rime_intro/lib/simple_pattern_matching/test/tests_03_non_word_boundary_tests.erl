@@ -1,4 +1,5 @@
 -module(tests_03_non_word_boundary_tests).
+
 %-define(RESEARCH, true).
 %%
 %% Tests
@@ -50,5 +51,4 @@ non_word_boundary_02_test() ->
     ?assertEqual(Expected, Result).
 
 -endif.
-
 -endif.

@@ -1,4 +1,5 @@
 -module(tests_05_decimal_value_tests).
+
 %-define(RESEARCH, true).
 %%
 %% Tests
@@ -42,5 +43,4 @@ octal_value_02_test() ->
     ?assertEqual(Expected, Result).
 
 -endif.
-
 -endif.

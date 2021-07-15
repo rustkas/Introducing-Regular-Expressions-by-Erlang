@@ -1,9 +1,9 @@
 % For research mode, activate the RESEARCH constant.
-% Uppercase letters.
--module(posix_04_upper_tests).
+% Whitespace (the same as \s from PCRE 8.34)
+-module(posix_09_space_tests).
 
 %-define(RESEARCH, true).
--define(REGEX, "[[:upper:]]").
+-define(REGEX, "[[:space:]]").
 
 %%
 %% Tests
@@ -36,7 +36,7 @@ research_test() ->
 -else.
 
 get_valid_character_list() ->
-    ValidCharacterList = lists:seq(65, 90) ++ lists:seq(192, 222),
+    ValidCharacterList = lists:seq(9, 13) ++ [32],
     ValidCharacterList.
 
 research_01_test() ->
@@ -53,9 +53,9 @@ research_02_test() ->
     Expected = true,
     ValidCharacterList = get_valid_character_list(),
 
-    RegularExpression = "[[:^upper:]]",
+    RegularExpression = "[[:^space:]]",
     {ok, MP} = re:compile(RegularExpression),
-    {match, _} = re:run(ValidCharacterList, MP),
+    nomatch = re:run(ValidCharacterList, MP),
     Result = true,
     ?assertEqual(Expected, Result).
 

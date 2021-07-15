@@ -1,9 +1,9 @@
 % For research mode, activate the RESEARCH constant.
-% Uppercase letters.
--module(posix_04_upper_tests).
+% ASCII characters
+-module(posix_12_ascii_tests).
 
 %-define(RESEARCH, true).
--define(REGEX, "[[:upper:]]").
+-define(REGEX, "[[:ascii:]]").
 
 %%
 %% Tests
@@ -35,25 +35,11 @@ research_test() ->
 
 -else.
 
-get_valid_character_list() ->
-    ValidCharacterList = lists:seq(65, 90) ++ lists:seq(192, 222),
-    ValidCharacterList.
-
 research_01_test() ->
     Expected = true,
-    ValidCharacterList = get_valid_character_list(),
+    ValidCharacterList = lists:seq(0, 255),
 
     RegularExpression = ?REGEX,
-    {ok, MP} = re:compile(RegularExpression),
-    {match, _} = re:run(ValidCharacterList, MP),
-    Result = true,
-    ?assertEqual(Expected, Result).
-
-research_02_test() ->
-    Expected = true,
-    ValidCharacterList = get_valid_character_list(),
-
-    RegularExpression = "[[:^upper:]]",
     {ok, MP} = re:compile(RegularExpression),
     {match, _} = re:run(ValidCharacterList, MP),
     Result = true,

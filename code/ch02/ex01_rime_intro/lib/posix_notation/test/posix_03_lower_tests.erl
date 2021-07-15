@@ -1,6 +1,7 @@
 % For research For research mode, activate the RESEARCH constant.
 % Lowercase letters.
 -module(posix_03_lower_tests).
+
 %-define(RESEARCH, true).
 -define(REGEX, "[[:lower:]]").
 
@@ -16,7 +17,7 @@
 research_test() ->
     Expected = ok,
     ValidCharacterList = lists:seq(0, 255),
-	
+
     RegularExpression = ?REGEX,
     {ok, MP} = re:compile(RegularExpression),
     Result =
@@ -34,19 +35,31 @@ research_test() ->
 
 -else.
 
+get_valid_character_list() ->
+    ValidCharacterList =
+        lists:seq(97, 122)
+        ++ [170, 181, 186]
+        ++ lists:seq(223, 246)
+        ++ lists:seq(248, 255),
+    ValidCharacterList.
+
 research_01_test() ->
     Expected = true,
-    ValidCharacterList =
-		lists:seq(97, 122)
-        ++ [170, 181, 186]
-        ++ lists:seq(223, 255),
-    
+    ValidCharacterList = get_valid_character_list(),
     RegularExpression = ?REGEX,
     {ok, MP} = re:compile(RegularExpression),
     {match, _} = re:run(ValidCharacterList, MP),
     Result = true,
     ?assertEqual(Expected, Result).
 
--endif.
+research_02_test() ->
+    Expected = true,
+    ValidCharacterList = get_valid_character_list(),
+    RegularExpression = "[[:^lower:]]",
+    {ok, MP} = re:compile(RegularExpression),
+    nomatch = re:run(ValidCharacterList, MP),
+    Result = true,
+    ?assertEqual(Expected, Result).
 
+-endif.
 -endif.

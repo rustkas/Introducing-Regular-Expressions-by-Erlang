@@ -1,9 +1,9 @@
 % For research mode, activate the RESEARCH constant.
-% Uppercase letters.
--module(posix_04_upper_tests).
+% Printing characters, excluding letters, digits, and space
+-module(posix_08_punct_tests).
 
 %-define(RESEARCH, true).
--define(REGEX, "[[:upper:]]").
+-define(REGEX, "[[:punct:]]").
 
 %%
 %% Tests
@@ -36,14 +36,22 @@ research_test() ->
 -else.
 
 get_valid_character_list() ->
-    ValidCharacterList = lists:seq(65, 90) ++ lists:seq(192, 222),
+    ValidCharacterList =
+        lists:seq(33, 47)
+        ++ lists:seq(58, 64)
+        ++ lists:seq(91, 96)
+        ++ lists:seq(123, 126)
+        ++ lists:seq(160, 169)
+        ++ lists:seq(171, 185)
+        ++ lists:seq(187, 191)
+        ++ [215, 247],
     ValidCharacterList.
 
 research_01_test() ->
     Expected = true,
     ValidCharacterList = get_valid_character_list(),
 
-    RegularExpression = ?REGEX,
+    RegularExpression = "[[:^punct:]]",
     {ok, MP} = re:compile(RegularExpression),
     {match, _} = re:run(ValidCharacterList, MP),
     Result = true,
@@ -53,7 +61,7 @@ research_02_test() ->
     Expected = true,
     ValidCharacterList = get_valid_character_list(),
 
-    RegularExpression = "[[:^upper:]]",
+    RegularExpression = ?REGEX,
     {ok, MP} = re:compile(RegularExpression),
     {match, _} = re:run(ValidCharacterList, MP),
     Result = true,

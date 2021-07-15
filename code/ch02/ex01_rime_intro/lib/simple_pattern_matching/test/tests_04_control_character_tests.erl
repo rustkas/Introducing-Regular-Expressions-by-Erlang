@@ -1,4 +1,5 @@
 -module(tests_04_control_character_tests).
+
 %-define(RESEARCH, true).
 %%
 %% Tests
@@ -12,7 +13,7 @@
 search_non_word_boundary_01_test() ->
     Expected = ok,
     ValidCharacterList = lists:seq(0, 255),
-    RegularExpression = element(1,hd(control_x_tuples())),
+    RegularExpression = element(1, hd(control_x_tuples())),
     {ok, MP} = re:compile(RegularExpression),
     Result =
         lists:foreach(fun(Elem) ->
@@ -27,8 +28,6 @@ search_non_word_boundary_01_test() ->
                       ValidCharacterList),
     ?assertEqual(Expected, Result).
 
-
-
 control_x_tuples() ->
     %{RegularExpression,Value}
     Numbers =
@@ -42,13 +41,12 @@ control_x_tuples() ->
          {"\\c7", 119},
          {"\\c8", 120},
          {"\\c9", 121}],
-		 
-	Numbers.
+
+    Numbers.
 
 -else.
 
 % Nothing
 
 -endif.
-
 -endif.

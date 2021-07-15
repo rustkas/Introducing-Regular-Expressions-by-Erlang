@@ -1,6 +1,7 @@
 % For research For research mode, activate the RESEARCH constant.
 % Letters and digits.
 -module(posix_02_alnum_tests).
+
 %-define(RESEARCH, true).
 -define(REGEX, "[[:alnum:]]").
 
@@ -16,7 +17,7 @@
 letters_research_test() ->
     Expected = ok,
     ValidCharacterList = lists:seq(0, 255),
-	
+
     RegularExpression = ?REGEX,
     {ok, MP} = re:compile(RegularExpression),
     Result =
@@ -35,21 +36,34 @@ letters_research_test() ->
 
 -else.
 
-letters_research_01_test() ->
-    Expected = true,
+get_valid_character_list() ->
     ValidCharacterList =
         lists:seq(48, 57)
         ++ lists:seq(65, 90)
-		++ lists:seq(97, 122)
+        ++ lists:seq(97, 122)
         ++ [170, 181, 186]
-        ++ lists:seq(192, 255),
-    
+        ++ lists:seq(192, 214)
+        ++ lists:seq(216, 246)
+        ++ lists:seq(248, 255),
+    ValidCharacterList.
+
+letters_research_01_test() ->
+    Expected = true,
+    ValidCharacterList = get_valid_character_list(),
     RegularExpression = ?REGEX,
     {ok, MP} = re:compile(RegularExpression),
     {match, _} = re:run(ValidCharacterList, MP),
     Result = true,
     ?assertEqual(Expected, Result).
 
--endif.
+letters_research_02_test() ->
+    Expected = true,
+    ValidCharacterList = get_valid_character_list(),
+    RegularExpression = "[[:^alnum:]]",
+    {ok, MP} = re:compile(RegularExpression),
+    nomatch = re:run(ValidCharacterList, MP),
+    Result = true,
+    ?assertEqual(Expected, Result).
 
+-endif.
 -endif.

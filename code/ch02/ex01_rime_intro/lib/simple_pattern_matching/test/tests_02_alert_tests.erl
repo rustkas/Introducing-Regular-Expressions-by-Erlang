@@ -1,4 +1,5 @@
 -module(tests_02_alert_tests).
+
 %-define(RESEARCH, true).
 %%
 %% Tests
@@ -8,6 +9,7 @@
 -include_lib("eunit/include/eunit.hrl").
 
 -ifdef(RESEARCH).
+
 search_alert_character_01_test() ->
     Expected = ok,
     ValidCharacterList = lists:seq(0, 255),
@@ -39,5 +41,4 @@ alert_character_02_test() ->
     ?assertEqual(Expected, Result).
 
 -endif.
-
 -endif.

@@ -1,4 +1,5 @@
 -module(tests_06_form_feed_tests).
+
 %-define(RESEARCH, true).
 %%
 %% Tests
@@ -53,5 +54,4 @@ form_feed_03_test() ->
     ?assertEqual(Expected, Result).
 
 -endif.
-
 -endif.

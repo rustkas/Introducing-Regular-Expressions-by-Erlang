@@ -1,4 +1,5 @@
 -module(tests_08_newline_character_tests).
+
 %-define(RESEARCH, true).
 %%
 %% Tests
@@ -52,5 +53,4 @@ form_feed_03_test() ->
     ?assertEqual(Expected, Result).
 
 -endif.
-
 -endif.
