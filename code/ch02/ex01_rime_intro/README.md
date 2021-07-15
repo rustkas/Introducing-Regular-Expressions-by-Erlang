@@ -12,6 +12,9 @@ EUnit
 -----
 	$ rebar3 eunit -v
 	$ rebar3 eunit -v -m posix_01_alpha_tests
+	$ rebar3 eunit -v -m posix_02_alnum_tests
+	$ rebar3 eunit -v -m posix_03_lower_tests
+	$ rebar3 eunit -v -m posix_04_upper_tests
 
 	
 

@@ -1,8 +1,8 @@
 % For research For research mode, activate the RESEARCH constant.
-% Letters.
--module(posix_01_alpha_tests).
+% Lowercase letters.
+-module(posix_03_lower_tests).
 %-define(RESEARCH, true).
--define(REGEX, "[[:alpha:]]").
+-define(REGEX, "[[:lower:]]").
 
 %%
 %% Tests
@@ -13,7 +13,7 @@
 
 -ifdef(RESEARCH).
 
-letters_research_test() ->
+research_test() ->
     Expected = ok,
     ValidCharacterList = lists:seq(0, 255),
 	
@@ -29,20 +29,18 @@ letters_research_test() ->
                                  false
                          end
                       end,
-                      %{match, _} = re:run([Elem], MP)
                       ValidCharacterList),
     ?assertEqual(Expected, Result).
 
 -else.
 
-letters_research_01_test() ->
+research_01_test() ->
     Expected = true,
     ValidCharacterList =
-        lists:seq(65, 90)
-        ++ lists:seq(97, 122)
+		lists:seq(97, 122)
         ++ [170, 181, 186]
-        ++ lists:seq(192, 255),
-    % octal code
+        ++ lists:seq(223, 255),
+    
     RegularExpression = ?REGEX,
     {ok, MP} = re:compile(RegularExpression),
     {match, _} = re:run(ValidCharacterList, MP),
