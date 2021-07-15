@@ -31,6 +31,11 @@ EUnit
 	$ rebar3 eunit -v -m tests_10_form_feed_tests
 	$ rebar3 eunit -v -m tests_11_horizontal_whitespace_tests
 	$ rebar3 eunit -v -m tests_12_not_horizontal_whitespace_tests
+	$ rebar3 eunit -v -m tests_13_new_line_tests
+	$ rebar3 eunit -v -m tests_14_carridge_return_tests
+	$ rebar3 eunit -v -m tests_15_horizontal_tab_tests
+	$ rebar3 eunit -v -m tests_16_vertical_tab_tests
+	$ rebar3 eunit -v -m tests_17_not_vertical_whitespace_tests
 	
 
 Build
