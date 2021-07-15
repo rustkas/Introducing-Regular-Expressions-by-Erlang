@@ -24,6 +24,10 @@ EUnit
     $ rebar3 eunit -v -m posix_11_xdigit_tests
 	$ rebar3 eunit -v -m posix_12_ascii_tests
 	
+	$ rebar3 eunit -v -m tests_09_whitespace_01_tests
+	$ rebar3 eunit -v -m tests_09_whitespace_02_tests
+	$ rebar3 eunit -v -m tests_09_whitespace_03_tests
+	
 
 Build
 -----
