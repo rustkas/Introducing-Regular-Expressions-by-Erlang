@@ -67,7 +67,7 @@ maching_word_03_test() ->
     InputList3 = [$_],
     % [0-9]
     InputList4 = lists:seq(48, 57),
-    InputList = InputList1 ++ InputList2 ++ InputList3 + InputList4,
+    InputList = InputList1 ++ InputList2 ++ InputList3 ++ InputList4,
     RegularExpression = "\\w",
     {ok, MP} = re:compile(RegularExpression),
     Result =

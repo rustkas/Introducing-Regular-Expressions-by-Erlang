@@ -1,4 +1,4 @@
--module(tests_07_word_boundary_tests).
+-module(tests_01_word_boundary_tests).
 
 %%
 %% Tests
@@ -11,8 +11,9 @@ word_boundary_01_test() ->
     Expected = ok,
     Numbers = lists:seq(48, 57),
     BigLetters = lists:seq(65, 90),
+    DashLetter = [95],
     SmallLetters = lists:seq(97, 122),
-    ValidCharacterList = Numbers ++ BigLetters ++ SmallLetters,
+    ValidCharacterList = Numbers ++ BigLetters ++ DashLetter ++ SmallLetters,
     RegularExpression = "\\b",
     {ok, MP} = re:compile(RegularExpression),
     Result =
