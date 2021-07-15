@@ -1,9 +1,9 @@
 % For research mode, activate the RESEARCH constant.
-% Maiching Whitespace
--module(tests_09_whitespace_03_tests).
+% Not Horizontal whitespace
+-module(tests_12_not_horizontal_whitespace_tests).
 
 %-define(RESEARCH, true).
--define(REGEX, "\\S").
+-define(REGEX, "\\H").
 
 %%
 %% Tests
@@ -36,7 +36,11 @@ research_test() ->
 -else.
 
 get_valid_character_list() ->
-    ValidCharacterList = lists:seq(0, 8) ++ lists:seq(14, 31) ++ lists:seq(33, 255),
+    ValidCharacterList =
+        lists:seq(0, 8)
+        ++ lists:seq(10, 31)
+        ++ lists:seq(33, 159)
+        ++ lists:seq(162, 255),
     ValidCharacterList.
 
 research_01_test() ->
@@ -51,7 +55,7 @@ research_01_test() ->
 research_02_test() ->
     Expected = true,
     ValidCharacterList = get_valid_character_list(),
-    RegularExpression = "[^\\S]",
+    RegularExpression = "[^\\H]",
     {ok, MP} = re:compile(RegularExpression),
     nomatch = re:run(ValidCharacterList, MP),
     Result = true,

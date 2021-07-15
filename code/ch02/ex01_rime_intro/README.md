@@ -28,6 +28,10 @@ EUnit
 	$ rebar3 eunit -v -m tests_09_whitespace_02_tests
 	$ rebar3 eunit -v -m tests_09_whitespace_03_tests
 	
+	$ rebar3 eunit -v -m tests_10_form_feed_tests
+	$ rebar3 eunit -v -m tests_11_horizontal_whitespace_tests
+	$ rebar3 eunit -v -m tests_12_not_horizontal_whitespace_tests
+	
 
 Build
 -----

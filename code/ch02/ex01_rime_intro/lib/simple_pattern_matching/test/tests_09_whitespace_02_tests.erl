@@ -36,7 +36,7 @@ research_test() ->
 -else.
 
 get_valid_character_list() ->
-    ValidCharacterList = [9,10,13,32],
+    ValidCharacterList = [9, 10, 13, 32],
     ValidCharacterList.
 
 research_01_test() ->
