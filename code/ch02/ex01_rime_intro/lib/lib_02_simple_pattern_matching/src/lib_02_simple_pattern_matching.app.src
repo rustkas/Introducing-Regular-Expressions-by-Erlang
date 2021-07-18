@@ -1,0 +1,15 @@
+{application, lib_02_simple_pattern_matching,
+ [{description, "Simple pattern matching examples"},
+  {vsn, "0.1.0"},
+  {registered, []},
+  {applications,
+   [kernel,
+    stdlib,
+	eunit_helper
+   ]},
+  {env,[]},
+  {modules, []},
+
+  {licenses, ["Apache 2.0"]},
+  {links, []}
+ ]}.
