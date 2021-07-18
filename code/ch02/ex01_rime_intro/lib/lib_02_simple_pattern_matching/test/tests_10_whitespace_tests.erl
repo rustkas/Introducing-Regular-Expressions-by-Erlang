@@ -58,6 +58,14 @@ research_02_test() ->
 research_03_test() ->
     Expected = true,
     ValidCharacterList = get_valid_character_list(),
+    RegularExpression = "[\\S]",
+    {ok, MP} = re:compile(RegularExpression),
+    Result = check_all_by_regex(MP, ValidCharacterList,true),
+    ?assertEqual(Expected, Result).
+
+research_04_test() ->
+    Expected = true,
+    ValidCharacterList = get_valid_character_list(),
     RegularExpression = "^[\\S]",
     {ok, MP} = re:compile(RegularExpression),
     Result = check_all_by_regex(MP, ValidCharacterList,true),

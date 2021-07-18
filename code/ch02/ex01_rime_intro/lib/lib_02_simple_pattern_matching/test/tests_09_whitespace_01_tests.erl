@@ -2,7 +2,7 @@
 % Maiching Whitespace
 -module(tests_09_whitespace_01_tests).
 %-define(RESEARCH, true).
--define(REGEX, "\s").
+-define(REGEX, "\\s").
 
 %%
 %% Tests
@@ -48,7 +48,7 @@ research_01_test() ->
 research_02_test() ->
     Expected = true,
     ValidCharacterList = get_valid_character_list(),
-    RegularExpression = "[^\s]",
+    RegularExpression = "[^\\s]",
     {ok, MP} = re:compile(RegularExpression),
         Result = check_all_by_regex(MP, ValidCharacterList,false),
     ?assertEqual(Expected, Result).
@@ -56,10 +56,18 @@ research_02_test() ->
 research_03_test() ->
     Expected = true,
     ValidCharacterList = get_valid_character_list(),
-    RegularExpression = "^[\s]",
+    RegularExpression = "[\\s]",
     {ok, MP} = re:compile(RegularExpression),
         Result = check_all_by_regex(MP, ValidCharacterList,true),
     ?assertEqual(Expected, Result).	
+
+research_04_test() ->
+    Expected = true,
+    ValidCharacterList = get_valid_character_list(),
+    RegularExpression = "^[\\s]",
+    {ok, MP} = re:compile(RegularExpression),
+        Result = check_all_by_regex(MP, ValidCharacterList,true),
+    ?assertEqual(Expected, Result).		
 
 -endif.
 -endif.
