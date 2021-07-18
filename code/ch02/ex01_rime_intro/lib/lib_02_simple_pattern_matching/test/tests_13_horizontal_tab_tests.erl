@@ -1,9 +1,8 @@
 % For research mode, activate the RESEARCH constant.
-% Vertical tab (whitespace)
--module(tests_16_vertical_tab_tests).
-
+% Horizontal tab
+-module(tests_13_horizontal_tab_tests).
 %-define(RESEARCH, true).
--define(REGEX, "\\v").
+-define(REGEX, "\\t").
 
 %%
 %% Tests
@@ -11,6 +10,7 @@
 -ifdef(TEST).
 
 -include_lib("eunit/include/eunit.hrl").
+-import(eunit_helper, [check_all_by_regex/3]).
 
 -ifdef(RESEARCH).
 
@@ -36,7 +36,7 @@ research_test() ->
 -else.
 
 get_valid_character_list() ->
-    ValidCharacterList = lists:seq(10,13) ++[133],
+    ValidCharacterList = [9],
     ValidCharacterList.
 
 research_01_test() ->
@@ -44,17 +44,23 @@ research_01_test() ->
     ValidCharacterList = get_valid_character_list(),
     RegularExpression = ?REGEX,
     {ok, MP} = re:compile(RegularExpression),
-    {match, _} = re:run(ValidCharacterList, MP),
-    Result = true,
+    Result = check_all_by_regex(MP, ValidCharacterList,true),
     ?assertEqual(Expected, Result).
 
 research_02_test() ->
     Expected = true,
     ValidCharacterList = get_valid_character_list(),
-    RegularExpression = "[^\\v]",
+    RegularExpression = "[\\t]",
     {ok, MP} = re:compile(RegularExpression),
-    nomatch = re:run(ValidCharacterList, MP),
-    Result = true,
+    Result = check_all_by_regex(MP, ValidCharacterList,true),
+    ?assertEqual(Expected, Result).
+	
+research_03_test() ->
+    Expected = true,
+    ValidCharacterList = get_valid_character_list(),
+    RegularExpression = "[^\\t]",
+    {ok, MP} = re:compile(RegularExpression),
+    Result = check_all_by_regex(MP, ValidCharacterList,false),
     ?assertEqual(Expected, Result).
 
 -endif.

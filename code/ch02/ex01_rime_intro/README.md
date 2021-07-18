@@ -12,8 +12,10 @@ EUnit
 -----
 	$ rebar3 eunit -v
 	
+	# Rime intro
 	$ rebar3 eunit -v -m tests_01_read_file_tests
 	
+	# Simple pattern matching
 	$ rebar3 eunit -v -m tests_01_word_boundary_tests
 	$ rebar3 eunit -v -m tests_02_alert_tests
 	$ rebar3 eunit -v -m tests_03_backspace_character_tests
@@ -30,7 +32,12 @@ EUnit
 	$ rebar3 eunit -v -m tests_10_whitespace_tests
 	$ rebar3 eunit -v -m tests_11_horizontal_whitespace_tests
 	$ rebar3 eunit -v -m tests_12_not_horizontal_whitespace_tests
+	$ rebar3 eunit -v -m tests_13_horizontal_tab_tests
+	$ rebar3 eunit -v -m tests_13_horizontal_tab_tests
+	$ rebar3 eunit -v -m tests_14_vertical_tab_tests
+	$ rebar3 eunit -v -m tests_15_non_vertical_whitespace_tests
 	
+	# Posix notation
 	$ rebar3 eunit -v -m posix_01_alpha_tests
 	$ rebar3 eunit -v -m posix_02_alnum_tests
 	$ rebar3 eunit -v -m posix_03_lower_tests
@@ -44,19 +51,7 @@ EUnit
     $ rebar3 eunit -v -m posix_11_xdigit_tests
 	$ rebar3 eunit -v -m posix_12_ascii_tests
 	
-	$ rebar3 eunit -v -m tests_09_whitespace_01_tests
-	$ rebar3 eunit -v -m tests_09_whitespace_02_tests
-	$ rebar3 eunit -v -m tests_09_whitespace_03_tests
-	
-	$ rebar3 eunit -v -m tests_10_form_feed_tests
-	$ rebar3 eunit -v -m tests_11_horizontal_whitespace_tests
-	$ rebar3 eunit -v -m tests_12_not_horizontal_whitespace_tests
-	$ rebar3 eunit -v -m tests_13_new_line_tests
-	$ rebar3 eunit -v -m tests_14_carridge_return_tests
-	$ rebar3 eunit -v -m tests_15_horizontal_tab_tests
-	$ rebar3 eunit -v -m tests_16_vertical_tab_tests
-	$ rebar3 eunit -v -m tests_17_not_vertical_whitespace_tests
-	
+	# Maching any character
     $ rebar3 eunit -v -m any_01_full_stop_01_tests
 	$ rebar3 eunit -v -m any_01_full_stop_02_tests
 	$ rebar3 eunit -v -m any_01_full_stop_03_tests
