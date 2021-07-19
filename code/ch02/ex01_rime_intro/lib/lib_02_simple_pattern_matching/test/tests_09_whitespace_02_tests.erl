@@ -1,6 +1,7 @@
 % For research mode, activate the RESEARCH constant.
 % Maiching Whitespace
 -module(tests_09_whitespace_02_tests).
+
 %-define(RESEARCH, true).
 -define(REGEX, "[ \\t\\n\\r]").
 
@@ -10,6 +11,7 @@
 -ifdef(TEST).
 
 -include_lib("eunit/include/eunit.hrl").
+
 -import(eunit_helper, [check_all_by_regex/3]).
 
 -ifdef(RESEARCH).
@@ -44,7 +46,7 @@ research_01_test() ->
     ValidCharacterList = get_valid_character_list(),
     RegularExpression = ?REGEX,
     {ok, MP} = re:compile(RegularExpression),
-    Result = check_all_by_regex(MP, ValidCharacterList,true),
+    Result = check_all_by_regex(MP, ValidCharacterList, true),
     ?assertEqual(Expected, Result).
 
 research_02_test() ->
@@ -52,7 +54,7 @@ research_02_test() ->
     ValidCharacterList = get_valid_character_list(),
     RegularExpression = "[^ \\t\\n\\r]",
     {ok, MP} = re:compile(RegularExpression),
-    Result = check_all_by_regex(MP, ValidCharacterList,false),
+    Result = check_all_by_regex(MP, ValidCharacterList, false),
     ?assertEqual(Expected, Result).
 
 research_03_test() ->
@@ -60,8 +62,8 @@ research_03_test() ->
     ValidCharacterList = get_valid_character_list(),
     RegularExpression = "^[ \\t\\n\\r]",
     {ok, MP} = re:compile(RegularExpression),
-    Result = check_all_by_regex(MP, ValidCharacterList,true),
+    Result = check_all_by_regex(MP, ValidCharacterList, true),
     ?assertEqual(Expected, Result).
-	
+
 -endif.
 -endif.

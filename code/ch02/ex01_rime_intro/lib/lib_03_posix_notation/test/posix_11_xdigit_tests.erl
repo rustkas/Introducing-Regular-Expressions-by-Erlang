@@ -11,6 +11,7 @@
 -ifdef(TEST).
 
 -include_lib("eunit/include/eunit.hrl").
+
 -import(eunit_helper, [check_all_by_regex/3]).
 
 -ifdef(RESEARCH).
@@ -47,7 +48,7 @@ research_01_test() ->
 
     RegularExpression = ?REGEX,
     {ok, MP} = re:compile(RegularExpression),
-    Result = check_all_by_regex(MP, Hexadecimal,true),
+    Result = check_all_by_regex(MP, Hexadecimal, true),
     ?assertEqual(Expected, Result).
 
 -endif.

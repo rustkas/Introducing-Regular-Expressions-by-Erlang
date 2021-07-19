@@ -59,6 +59,9 @@ EUnit
 	$ rebar3 eunit -v -m any_02_8_dots_01_tests
 	$ rebar3 eunit -v -m any_02_8_dots_02_tests
 	
+	## ANCYENT
+	$ rebar3 eunit -v -m app_01_get_all_env_tests
+	
 	
 
 Build

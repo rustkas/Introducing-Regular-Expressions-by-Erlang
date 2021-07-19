@@ -11,6 +11,7 @@
 -ifdef(TEST).
 
 -include_lib("eunit/include/eunit.hrl").
+
 -import(eunit_helper, [check_all_by_regex/3]).
 
 -ifdef(RESEARCH).
@@ -35,15 +36,16 @@ research_test() ->
 
 -else.
 
-get_valid_character_list() -> lists:seq(0,255) -- [10].
+get_valid_character_list() ->
+    lists:seq(0, 255) -- [10].
 
 research_01_test() ->
     Expected = true,
     ValidCharacterList = get_valid_character_list(),
-    
+
     RegularExpression = ?REGEX,
     {ok, MP} = re:compile(RegularExpression),
-    Result = check_all_by_regex(MP, ValidCharacterList,true),
+    Result = check_all_by_regex(MP, ValidCharacterList, true),
     ?assertEqual(Expected, Result).
 
 research_02_test() ->
@@ -52,8 +54,8 @@ research_02_test() ->
     RegularExpression = "[^.]",
     {ok, MP} = re:compile(RegularExpression),
     ExpectedResult = nomatch,
-	ExpectedResult = re:run(ValidCharacterList, MP),
-    Result = check_all_by_regex(MP, ValidCharacterList,false),
+    ExpectedResult = re:run(ValidCharacterList, MP),
+    Result = check_all_by_regex(MP, ValidCharacterList, false),
     ?assertEqual(Expected, Result).
 
 -endif.

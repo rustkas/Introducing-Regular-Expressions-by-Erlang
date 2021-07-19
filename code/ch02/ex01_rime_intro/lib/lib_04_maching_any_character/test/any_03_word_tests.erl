@@ -1,9 +1,9 @@
 % For research For research mode, activate the RESEARCH constant.
-% ......
--module(any_02_8_dots_01_tests).
+% \bA.{5}T\b
+-module(any_03_word_tests).
 
-%-define(RESEARCH, true).
--define(REGEX, "........").
+-define(RESEARCH, true).
+-define(REGEX, "\\bA.{5}T\\b").
 
 %%
 %% Tests
@@ -24,7 +24,7 @@ read_local_file() ->
 -ifdef(RESEARCH).
 
 letters_research_test() ->
-    Expected = "THE RIME",
+    Expected = "ANCYENT",
     FileContent = read_local_file(),
 
     RegularExpression = ?REGEX,

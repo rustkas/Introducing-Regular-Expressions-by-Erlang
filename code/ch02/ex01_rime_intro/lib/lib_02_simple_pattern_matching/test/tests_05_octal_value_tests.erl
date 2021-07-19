@@ -9,6 +9,7 @@
 -ifdef(TEST).
 
 -include_lib("eunit/include/eunit.hrl").
+
 -import(eunit_helper, [check_all_by_regex/3]).
 
 -ifdef(RESEARCH).
@@ -39,7 +40,7 @@ research_01_test() ->
     % octal code
     RegularExpression = "\\110",
     {ok, MP} = re:compile(RegularExpression),
-    Result = check_all_by_regex(MP, ValidCharacterList,true),
+    Result = check_all_by_regex(MP, ValidCharacterList, true),
     ?assertEqual(Expected, Result).
 
 -endif.

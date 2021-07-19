@@ -11,6 +11,7 @@
 -ifdef(TEST).
 
 -include_lib("eunit/include/eunit.hrl").
+
 -import(eunit_helper, [check_all_by_regex/3]).
 
 -ifdef(RESEARCH).
@@ -44,7 +45,7 @@ get_valid_character_list() ->
         ++ lists:seq(123, 126)
         ++ lists:seq(160, 169)
         ++ lists:seq(171, 180)
-		++ lists:seq(182, 185)
+        ++ lists:seq(182, 185)
         ++ lists:seq(187, 191)
         ++ [215, 247],
     ValidCharacterList.
@@ -55,7 +56,7 @@ research_01_test() ->
 
     RegularExpression = ?REGEX,
     {ok, MP} = re:compile(RegularExpression),
-    Result = check_all_by_regex(MP, ValidCharacterList,true),
+    Result = check_all_by_regex(MP, ValidCharacterList, true),
     ?assertEqual(Expected, Result).
 
 research_02_test() ->
@@ -64,7 +65,7 @@ research_02_test() ->
 
     RegularExpression = "[[:^punct:]]",
     {ok, MP} = re:compile(RegularExpression),
-    Result = check_all_by_regex(MP, ValidCharacterList,false),
+    Result = check_all_by_regex(MP, ValidCharacterList, false),
     ?assertEqual(Expected, Result).
 
 -endif.
