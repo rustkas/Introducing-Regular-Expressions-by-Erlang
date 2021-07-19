@@ -2,7 +2,7 @@
 % \bA.{5}T\b
 -module(any_03_word_tests).
 
--define(RESEARCH, true).
+%-define(RESEARCH, true).
 -define(REGEX, "\\bA.{5}T\\b").
 
 %%
@@ -23,7 +23,7 @@ read_local_file() ->
 
 -ifdef(RESEARCH).
 
-letters_research_test() ->
+research_test() ->
     Expected = "ANCYENT",
     FileContent = read_local_file(),
 
@@ -36,8 +36,9 @@ letters_research_test() ->
 -else.
 
 research_01_test() ->
-    Expected = "THE RIME",
+        Expected = "ANCYENT",
     FileContent = read_local_file(),
+
     RegularExpression = ?REGEX,
     {ok, MP} = re:compile(RegularExpression),
     {match, [Result]} = re:run([FileContent], MP, [{capture, all, list}]),
