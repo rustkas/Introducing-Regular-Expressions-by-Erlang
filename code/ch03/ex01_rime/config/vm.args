@@ -1,0 +1,7 @@
+-sname ex01_rime
+
+-setcookie ex01_rime_cookie
+
++K true
++A30
++pc unicode
