@@ -36,7 +36,7 @@ research_test() ->
 -else.
 
 research_01_test() ->
-        Expected = "ANCYENT",
+    Expected = "ANCYENT",
     FileContent = read_local_file(),
 
     RegularExpression = ?REGEX,
