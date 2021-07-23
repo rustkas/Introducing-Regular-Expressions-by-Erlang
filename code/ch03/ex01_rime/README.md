@@ -14,5 +14,6 @@ ex01_rime
 	
 ### Rime intro
 	$ rebar3 eunit -m line_01_beginning_end_tests
-	$ rebar3 eunit -m line_02_wods_no_words_tests
-	
+	$ rebar3 eunit -m line_02_words_no_words_boundaries_tests
+	$ rebar3 eunit -m line_03_quoting_group_characters_as_literal_tests
+	$ rebar3 eunit -m line_03_add_tags_tests

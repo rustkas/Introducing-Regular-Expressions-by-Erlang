@@ -26,7 +26,6 @@ research_test() ->
         lists:foreach(fun(Elem) ->
                          case re:run([Elem], MP) of
                              {match, _} ->
-                                 %true;
                                  ?debugFmt("Found! = ~p~n", [Elem]);
                              nomatch ->
                                  false

@@ -29,7 +29,7 @@ research_test() ->
 
     RegularExpression = ?REGEX,
     {ok, MP} = re:compile(RegularExpression,[]),
-    {match, [Result]} = re:run([FileContent], MP, [{capture, all, list}]),
+    {match, [Result]} = re:run(FileContent, MP, [{capture, all, list}]),
     ?debugFmt("Found! = ~p~n", [Result]).
 
 -else.
@@ -49,7 +49,7 @@ research_01(FileContent) ->
     
     RegularExpression = ?REGEX,
     {ok, MP} = re:compile(RegularExpression),
-    {match, [Result]} = re:run([FileContent], MP, [{capture, all, list}]),
+    {match, [Result]} = re:run(FileContent, MP, [{capture, all, list}]),
     ?_assertEqual(Expected, Result).
 
 research_02(FileContent) ->
@@ -57,7 +57,7 @@ research_02(FileContent) ->
     
     RegularExpression = "[^\\n]*",
     {ok, MP} = re:compile(RegularExpression),
-    {match, [Result]} = re:run([FileContent], MP, [{capture, all, list}]),
+    {match, [Result]} = re:run(FileContent, MP, [{capture, all, list}]),
     ?_assertEqual(Expected, Result).
 
 research_03(FileContent) ->
@@ -65,7 +65,7 @@ research_03(FileContent) ->
     
     RegularExpression = "\\n",
     {ok, MP} = re:compile(RegularExpression),
-    {match, [Result]} = re:run([FileContent], MP, [{capture, all, list}]),
+    {match, [Result]} = re:run(FileContent, MP, [{capture, all, list}]),
     ?_assertEqual(Expected, Result).
 	
 research_04(FileContent) ->
@@ -73,7 +73,7 @@ research_04(FileContent) ->
     
     RegularExpression = "\\n\\r",
     {ok, MP} = re:compile(RegularExpression),
-    Result = re:run([FileContent], MP, [{capture, all, list}]),
+    Result = re:run(FileContent, MP, [{capture, all, list}]),
     ?_assertEqual(Expected, Result).	
 
 research_05(FileContent) ->
@@ -81,7 +81,7 @@ research_05(FileContent) ->
     
     RegularExpression = ".+",
     {ok, MP} = re:compile(RegularExpression),
-    {match, [Result]} = re:run([FileContent], MP, [{capture, all, list}]),
+    {match, [Result]} = re:run(FileContent, MP, [{capture, all, list}]),
     ?_assertEqual(Expected, Result).
 
 research_06(FileContent) ->
@@ -89,7 +89,7 @@ research_06(FileContent) ->
     
     RegularExpression = "\\xA", % line feed 
     {ok, MP} = re:compile(RegularExpression),
-    {match, [Result]} = re:run([FileContent], MP, [{capture, all, list}]),
+    {match, [Result]} = re:run(FileContent, MP, [{capture, all, list}]),
     ?_assertEqual(Expected, Result).
 
 research_07(FileContent) ->
@@ -97,7 +97,7 @@ research_07(FileContent) ->
     
     RegularExpression = "\\xA\\xD", %  a line feed (U+000A), a carriage return (U+000D)
     {ok, MP} = re:compile(RegularExpression),
-    Result = re:run([FileContent], MP, [{capture, all, list}]),
+    Result = re:run(FileContent, MP, [{capture, all, list}]),
     ?_assertEqual(Expected, Result).
 
 research_08(FileContent) ->
@@ -105,7 +105,7 @@ research_08(FileContent) ->
     
     RegularExpression = ?REGEX, 
     {ok, MP} = re:compile(RegularExpression,[dotall]),
-    {match, [Result]} = re:run([FileContent], MP, [{capture, all, list}]),
+    {match, [Result]} = re:run(FileContent, MP, [{capture, all, list}]),
 	Length = length(Result),
     ?_assertEqual(Expected, Length).
 
@@ -114,7 +114,7 @@ research_09(FileContent) ->
     
     RegularExpression = ".+", 
     {ok, MP} = re:compile(RegularExpression,[dotall]),
-    {match, [Result]} = re:run([FileContent], MP, [{capture, all, list}]),
+    {match, [Result]} = re:run(FileContent, MP, [{capture, all, list}]),
 	Length = length(Result),
     ?_assertEqual(Expected, Length).
 
@@ -123,7 +123,7 @@ research_10(FileContent) ->
     
     RegularExpression = "^T.*$", 
     {ok, MP} = re:compile(RegularExpression,[multiline]),
-    {match, [Result]} = re:run([FileContent], MP, [{capture, all, list}]),
+    {match, [Result]} = re:run(FileContent, MP, [{capture, all, list}]),
     ?_assertEqual(Expected, Result).
 	
 research_11(FileContent) ->
@@ -131,13 +131,13 @@ research_11(FileContent) ->
     
     RegularExpression = "(^T.*$)", 
     {ok, MP} = re:compile(RegularExpression,[multiline]),
-	
+
 	{ok, Split_MP} = re:compile("\\n",[]),
     FullResult = re:replace(FileContent, MP, "<h1>\\1</h1>", [{return, list}]),
 	ListOfLines = re:split(FullResult, Split_MP,[{return, list}]), 
 	Result =  hd(ListOfLines),
 	?_assertMatch("<h1>THE RIME OF THE ANCYENT MARINERE, IN SEVEN PARTS.</h1>", Result).
-	    
+	
     
 	
 -endif.

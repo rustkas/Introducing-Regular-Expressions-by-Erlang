@@ -29,7 +29,7 @@ research_test() ->
 
     RegularExpression = ?REGEX,
     {ok, MP} = re:compile(RegularExpression),
-    {match, [Result]} = re:run([FileContent], MP, [{capture, all, list}]),
+    {match, [Result]} = re:run(FileContent, MP, [{capture, all, list}]),
     ?debugFmt("Found! = ~s~n", [Result]),
     ?assertEqual(Expected, Result).
 
@@ -41,7 +41,7 @@ research_01_test() ->
 
     RegularExpression = ?REGEX,
     {ok, MP} = re:compile(RegularExpression),
-    {match, [Result]} = re:run([FileContent], MP, [{capture, all, list}]),
+    {match, [Result]} = re:run(FileContent, MP, [{capture, all, list}]),
     ?assertEqual(Expected, Result).
 
 -endif.

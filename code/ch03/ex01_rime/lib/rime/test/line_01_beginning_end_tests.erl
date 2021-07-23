@@ -3,7 +3,7 @@
 -module(line_01_beginning_end_tests).
 
 %-define(RESEARCH, true).
--define(REGEX, "^THE.*\\?$").
+-define(REGEX, "\\A").
 
 %%
 %% Tests
@@ -26,7 +26,7 @@ research_test() ->
 
     RegularExpression = ?REGEX,
     {ok, MP} = re:compile(RegularExpression, [dotall]),
-    {match, [Result]} = re:run([FileContent], MP, [{capture, all, list}]),
+    {match, [Result]} = re:run(FileContent, MP, [{capture, all, list}]),
     ?debugFmt("Found! = ~p~n", [Result]).
 
 -else.
@@ -42,47 +42,50 @@ research_01_test() ->
     FileContent = read_rime(),
     RegularExpression = "^How.*Country\\.$",
     {ok, MP} = re:compile(RegularExpression, [dotall, multiline]),
-    {match, [Result]} = re:run([FileContent], MP, [{capture, all, list}]),
+    {match, [Result]} = re:run(FileContent, MP, [{capture, all, list}]),
     ?_assertEqual(Expected, Result).
 
 read_rime_01() ->
     String = read_local_file("rime_01.txt"),
     String.
 
-research_02_test() ->
+rime_01_test_() ->
+    {foreach,
+     local,
+     fun read_rime_01/0,
+     [fun research_02/1, fun research_03/1, fun research_04/1]}.
+
+research_02(FileContent) ->
     Expected =
-        "THE RIME OF THE ANCYENT MARINERE, IN SEVEN PARTS.\n\nARGUMENT.\n\nHow a Ship having passed the Line was driven by Storms to the cold Country towards the South Pole; and how from thence she made her course to the tropical Latitude of the Great Pacific Ocean; and of the strange things that befell; and in what manner the Ancyent Marinere came back to his own Country.\n\nI.\n\n     It is an ancyent Marinere,\n       And he stoppeth one of three:\n     \"By thy long grey beard and thy glittering eye\n
-      \"Now wherefore stoppest me?",
-    FileContent = read_rime_01(),
+        "THE RIME OF THE ANCYENT MARINERE, IN SEVEN PARTS.\n\nARGUMENT.\n\nHow a Ship having passed the Line was driven by Storms to the cold Country towards the South Pole; and how from thence she made her course to the tropical Latitude of the Great Pacific Ocean; and of the strange things that befell; and in what manner the Ancyent Marinere came back to his own Country.\n\nI.\n\n     It is an ancyent Marinere,\n       And he stoppeth one of three:\n     \"By thy long grey beard and thy glittering eye\n       \"Now wherefore stoppest me?",
     RegularExpression = "^THE.*\\?$",
     {ok, MP} = re:compile(RegularExpression, [dotall]),
-    {match, [Result]} = re:run([FileContent], MP, [{capture, all, list}]),
+    {match, [Result]} = re:run(FileContent, MP, [{capture, all, list}]),
+    %?debugFmt("Found! = ~p~n", [Result]),
     ?_assertEqual(Expected, Result).
-	
-research_03_test() ->
+
+research_03(FileContent) ->
     Expected = nomatch,
-    FileContent = read_rime_01(),
     RegularExpression = "^THE.*\\?$",
     {ok, MP} = re:compile(RegularExpression, []),
-    Result = re:run([FileContent], MP, [{capture, all, list}]),
+    Result = re:run(FileContent, MP, [{capture, all, list}]),
     ?_assertEqual(Expected, Result).
-	
-research_04_test() ->
+
+research_04(FileContent) ->
     Expected = "THE RIME OF THE ANCYENT MARINERE, IN SEVEN PARTS.",
-    FileContent = read_rime_01(),
     RegularExpression = "^THE.*",
     {ok, MP} = re:compile(RegularExpression, []),
-    {match, [Result]} = re:run([FileContent], MP, [{capture, all, list}]),
+    {match, [Result]} = re:run(FileContent, MP, [{capture, all, list}]),
     ?_assertEqual(Expected, Result).
-	
+
 research_05_test() ->
     Expected = 532,
-    FileContent = read_rime_01(),
+    FileContent = read_local_file("rime.txt"),
     RegularExpression = "^THE.*",
     {ok, MP} = re:compile(RegularExpression, []),
-    {match, [ResultText]} = re:run([FileContent], MP, [{capture, all, list}]),
-	ResultLength = length(ResultText),
-    ?_assertEqual(Expected, ResultLength).	
-	
+    {match, [ResultText]} = re:run(FileContent, MP, [{capture, all, list}]),
+    ResultLength = length(ResultText),
+    ?_assertEqual(Expected, ResultLength).
+
 -endif.
 -endif.
