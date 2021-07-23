@@ -11,3 +11,4 @@ Book's author [repository](https://github.com/michaeljamesfitzgerald/Introducing
 * [Chapter 1](code/ch01)
 * [Chapter 2](code/ch02)
 * [Chapter 3](code/ch03)
+* [Chapter 4](code/ch04)
