@@ -1,0 +1,7 @@
+-sname ex01_character_classes
+
+-setcookie ex01_character_classes_cookie
+
++K true
++A30
++pc unicode

@@ -19,5 +19,6 @@ ex01_alternation
 	$ rebar3 eunit -m subpatterns_01_tests
 	$ rebar3 eunit -m capturing_groups_01_tests
 	$ rebar3 eunit -m non_capturing_groups_01_tests
+	$ rebar3 eunit -m atomic_groups_01_tests
 	
 	

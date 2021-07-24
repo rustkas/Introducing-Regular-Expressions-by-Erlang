@@ -2,7 +2,7 @@
 %
 -module(non_capturing_groups_01_tests).
 
-%-define(RESEARCH, true).
+-define(RESEARCH, true).
 
 %%
 %% Tests
@@ -26,7 +26,7 @@ read_rime() ->
 
 research_test() ->
     FileContent = read_rime(),
-    Regex = "(?i:the)",
+    Regex = "(?>(?i)the)",
     {ok, MP} = re:compile(Regex),
     {match, Result} =
         re:run(FileContent, MP, [notempty, global, {capture, all, list}]),
@@ -47,7 +47,6 @@ alteration_test_() ->
 
 research_01(FileContent) ->
     Expected = 412,
-    FileContent = read_rime(),
     Regex = "(?:the|The|THE)",
     {ok, MP} = re:compile(Regex),
     {match, Captured} =
@@ -58,7 +57,6 @@ research_01(FileContent) ->
 
 research_02(FileContent) ->
     Expected = ["THE"],
-    FileContent = read_rime(),
     Regex = "(?:the|The|THE)",
     {ok, MP} = re:compile(Regex),
     {match, Captured} =
@@ -70,7 +68,6 @@ research_02(FileContent) ->
 % caseless support
 research_03(FileContent) ->
     Expected = 412,
-    FileContent = read_rime(),
     Regex = "(?i)(?:the)",
     {ok, MP} = re:compile(Regex),
     {match, Captured} =
@@ -82,7 +79,6 @@ research_03(FileContent) ->
 % caseless support
 research_04(FileContent) ->
     Expected = 412,
-    FileContent = read_rime(),
     Regex = "(?:the)",
     {ok, MP} = re:compile(Regex, [caseless]),
     {match, Captured} =
@@ -94,7 +90,6 @@ research_04(FileContent) ->
 % caseless support
 research_05(FileContent) ->
     Expected = 412,
-    FileContent = read_rime(),
     Regex = "(?:(?i)the)",
     {ok, MP} = re:compile(Regex, [caseless]),
     {match, Captured} =
@@ -106,7 +101,6 @@ research_05(FileContent) ->
 % caseless support
 research_06(FileContent) ->
     Expected = 412,
-    FileContent = read_rime(),
     Regex = "(?i:the)",
     {ok, MP} = re:compile(Regex, [caseless]),
     {match, Captured} =

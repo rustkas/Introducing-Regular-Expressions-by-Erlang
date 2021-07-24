@@ -1,6 +1,8 @@
 # Introducing Regular Expressions in Erlang
 
-Book's author [repository](https://github.com/michaeljamesfitzgerald/Introducing-Regular-Expressions).
+[Michael Fitzgerald](https://michaeljamesfitzgerald.com/contact/)
+
+Book's [repository](https://github.com/michaeljamesfitzgerald/Introducing-Regular-Expressions).
 
 ## Software
 - [RegexPal](https://www.regexpal.com/)
@@ -12,3 +14,4 @@ Book's author [repository](https://github.com/michaeljamesfitzgerald/Introducing
 * [Chapter 2](code/ch02)
 * [Chapter 3](code/ch03)
 * [Chapter 4](code/ch04)
+* [Chapter 5](code/ch05)
