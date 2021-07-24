@@ -1,7 +1,6 @@
 % For research For research mode, activate the RESEARCH constant.
 %
 -module(line_03_quoting_group_characters_as_literal_tests).
-
 %-define(RESEARCH, true).
 
 %%
@@ -10,8 +9,6 @@
 -ifdef(TEST).
 
 -include_lib("eunit/include/eunit.hrl").
-
--import(eunit_helper, [check_all_by_regex/3]).
 
 -ifdef(RESEARCH).
 
