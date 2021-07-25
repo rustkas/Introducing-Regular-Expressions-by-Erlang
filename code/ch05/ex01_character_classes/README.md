@@ -15,5 +15,7 @@ ex01_character_classes
 -----
 	$ rebar3 eunit
 	$ rebar3 eunit -m classes_01_tests
+	$ rebar3 eunit -m classes_02_negated_character_tests
+	$ rebar3 eunit -m classes_03_posix_character_classes_tests
 	
 	

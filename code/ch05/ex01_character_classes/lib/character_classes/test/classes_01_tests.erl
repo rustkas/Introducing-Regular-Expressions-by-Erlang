@@ -2,7 +2,7 @@
 %
 -module(classes_01_tests).
 
--define(RESEARCH, true).
+%-define(RESEARCH, true).
 
 %%
 %% Tests
@@ -29,15 +29,12 @@ read_ascii_graphic() ->
 -ifdef(RESEARCH).
 
 research_test() ->
-    Regex = "[a-fA-F0-9]+",
+	Regex = "[_a-zA-Z][ \t\n\r]",
+	FileContent = read_rime(),
     {ok, MP} = re:compile(Regex),
-    ListNumbers =
-        lists:map(fun(Elem) -> sstr:integer_to_list(Elem,16) end, lists:seq(0, 99)),
-    Content = sstr:join(ListNumbers, " "),
-    %?debugFmt("~p~n", [Content])
-	{match, Captured} =
-        re:run(Content, MP, [notempty, global, {capture, all, list}]),
+    {match, Captured} = re:run(FileContent, MP, [notempty, global, {capture, all, list}]),
     ?debugFmt("~p~n", [Captured]).
+	
 
 -else.
 
@@ -45,7 +42,7 @@ rime_test_() ->
     {foreach,
      local,
      fun read_rime/0,
-     [fun research_01/1, fun research_02/1, fun research_03/1]}.
+     [fun research_01/1, fun research_02/1, fun research_03/1,fun research_03_01/1,fun research_03_02/1]}.
 
 read_ascii_graphic_test_() ->
     {foreach,
@@ -79,6 +76,24 @@ research_03(FileContent) ->
     {ok, MP} = re:compile(Regex),
     Result = re:run(FileContent, MP, [notempty, global, {capture, all, list}]),
     ?_assertEqual(Expected, Result).
+	
+research_03_01(FileContent) ->
+    Expected = 3398,
+    Regex = "\\w\\s",
+    {ok, MP} = re:compile(Regex),
+    {match, Captured} = re:run(FileContent, MP, [notempty, global, {capture, all, list}]),
+    Count = length(Captured),
+    Result = Count,
+    ?_assertEqual(Expected, Result).
+	
+research_03_02(FileContent) ->
+    Expected = 3398,
+    Regex = "[_0-9a-zA-Z][ \t\n\r]",
+    {ok, MP} = re:compile(Regex),
+    {match, Captured} = re:run(FileContent, MP, [notempty, global, {capture, all, list}]),
+    Count = length(Captured),
+    Result = Count,
+    ?_assertEqual(Expected, Result).	
 
 research_04(FileContent) ->
     Expected = 10,
@@ -129,14 +144,15 @@ research_07_test() ->
 	%?debugFmt("Expected = ~p, Result = ~p~n",[Expected,Result]),
     ?assertEqual(Expected, Result).
 
-research_0_test() ->
-    Expected = 50,
-    Regex = "[a-fA-F0-9]",
+research_8_test() ->
+    Expected = 100,
+    Regex = "[a-fA-F0-9]+",
     {ok, MP} = re:compile(Regex),
     ListNumbers =
         lists:map(fun(Elem) -> sstr:integer_to_list(Elem,16) end, lists:seq(0, 99)),
     Content = sstr:join(ListNumbers, " "),
-    {match, Captured} =
+    %?debugFmt("~p~n", [Content])
+	{match, Captured} =
         re:run(Content, MP, [notempty, global, {capture, all, list}]),
     Count = length(Captured),
     Result = Count,

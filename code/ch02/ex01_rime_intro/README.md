@@ -36,6 +36,7 @@ EUnit
 	$ rebar3 eunit -v -m tests_13_horizontal_tab_tests
 	$ rebar3 eunit -v -m tests_14_vertical_tab_tests
 	$ rebar3 eunit -v -m tests_15_non_vertical_whitespace_tests
+	$ rebar3 eunit -v -m tests_16_words_01_tests
 	
 	# Posix notation
 	$ rebar3 eunit -v -m posix_01_alpha_tests
@@ -50,6 +51,7 @@ EUnit
 	$ rebar3 eunit -v -m posix_10_cntrl_tests
     $ rebar3 eunit -v -m posix_11_xdigit_tests
 	$ rebar3 eunit -v -m posix_12_ascii_tests
+	$ rebar3 eunit -v -m posix_13_blank_tests
 	
 	# Maching any character
     $ rebar3 eunit -v -m any_01_full_stop_01_tests
