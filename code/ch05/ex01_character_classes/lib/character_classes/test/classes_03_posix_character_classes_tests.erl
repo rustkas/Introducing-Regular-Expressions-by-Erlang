@@ -65,7 +65,8 @@ rime_test_() ->
 	  fun rime_10/1,
 	  fun rime_11/1,
 	  fun rime_12/1,
-	  fun rime_13/1
+	  fun rime_13/1,
+	  fun rime_01_01/1
 	  ]}.
 
 read_ascii_graphic_test_() ->
@@ -86,6 +87,19 @@ rime_01(FileContent) ->
     Count = length(Captured),
     Result = Count,
     ?_assertEqual(Expected, Result).
+
+%
+rime_01_01(FileContent) ->
+    Expected = 16187,
+    Regex = "[[:alnum:]]",
+    {ok, MP} = re:compile(Regex,[unicode]),
+    {match, Captured} =
+        re:run(FileContent, MP, [notempty, global, {capture, all, list}]),
+    Count = length(Captured),
+    Result = Count,
+    ?_assertEqual(Expected, Result).
+
+
 
 rime_02(FileContent) ->
     Expected = 16185,

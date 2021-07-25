@@ -1,0 +1,7 @@
+-sname ex01_maching_unicode
+
+-setcookie ex01_maching_unicode_cookie
+
++K true
++A30
++pc unicode
