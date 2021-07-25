@@ -3,7 +3,7 @@
 -module(classes_03_posix_character_classes_tests).
 -export([read_rime/0, read_ascii_graphic/0, write_to_file/2]).
 
--define(RESEARCH, true).
+%-define(RESEARCH, true).
 
 %%
 %% Tests
@@ -36,8 +36,8 @@ read_ascii_graphic() ->
 -ifdef(RESEARCH).
 
 research_test() ->
-FileContent = read_ascii_graphic(),
-	Regex = "[[:digit:]]",
+FileContent = read_rime(),
+	Regex = "[[:graph:]]",
 	RegexTune = Regex,	
     {ok, MP} = re:compile(RegexTune),
     {match, Captured} =
@@ -73,7 +73,7 @@ read_ascii_graphic_test_() ->
      local,
      fun read_ascii_graphic/0,
      [fun ascii_graphic_01/1,
-	  fun ascii_graphic_02
+	  fun ascii_graphic_02/1
 	 ]}.
 
 rime_01(FileContent) ->
@@ -166,7 +166,7 @@ rime_08(FileContent) ->
 rime_09(FileContent) ->
     Expected = 1003,
     Regex = "[[:upper:]]",
-    RegexTune = re_tuner:tune(Regex),	
+	RegexTune = Regex,	
     {ok, MP} = re:compile(RegexTune),
     {match, Captured} =
         re:run(FileContent, MP, [notempty, global, {capture, all, list}]),
@@ -177,7 +177,7 @@ rime_09(FileContent) ->
 rime_10(FileContent) ->
     Expected = 17272,
     Regex = "[[:graph:]]",
-    RegexTune = re_tuner:tune(Regex),	
+    RegexTune = Regex,	
     {ok, MP} = re:compile(RegexTune),
     {match, Captured} =
         re:run(FileContent, MP, [notempty, global, {capture, all, list}]),
@@ -186,9 +186,9 @@ rime_10(FileContent) ->
     ?_assertEqual(Expected, Result).
 
 rime_11(FileContent) ->
-    Expected = 16199,
+    Expected =  16199,
     Regex = "[[:word:]]",
-    RegexTune = re_tuner:tune(Regex),	
+    RegexTune = Regex,	
     {ok, MP} = re:compile(RegexTune),
     {match, Captured} =
         re:run(FileContent, MP, [notempty, global, {capture, all, list}]),
@@ -199,7 +199,7 @@ rime_11(FileContent) ->
 rime_12(FileContent) ->
     Expected = 24650,
     Regex = "[[:print:]]",
-    RegexTune = re_tuner:tune(Regex),	
+    RegexTune = Regex,	
     {ok, MP} = re:compile(RegexTune),
     {match, Captured} =
         re:run(FileContent, MP, [notempty, global, {capture, all, list}]),
@@ -210,7 +210,7 @@ rime_12(FileContent) ->
 rime_13(FileContent) ->
     Expected = 1085,
     Regex = "[[:punct:]]",
-    RegexTune = re_tuner:tune(Regex),	
+    RegexTune = Regex,	
     {ok, MP} = re:compile(RegexTune),
     {match, Captured} =
         re:run(FileContent, MP, [notempty, global, {capture, all, list}]),
