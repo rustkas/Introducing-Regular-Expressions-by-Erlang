@@ -15,3 +15,6 @@ ex01_quontifiers
 -----
 	$ rebar3 eunit
 	$ rebar3 eunit -m quontifiers_tests
+	$ rebar3 eunit -m number_of_times_tests
+	$ rebar3 eunit -m lazy_quontifies_tests
+	$ rebar3 eunit -m possessive_quontifies_tests
