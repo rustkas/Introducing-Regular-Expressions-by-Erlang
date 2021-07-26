@@ -16,3 +16,5 @@ Book's [repository](https://github.com/michaeljamesfitzgerald/Introducing-Regula
 * [Chapter 4](code/ch04)
 * [Chapter 5](code/ch05)
 * [Chapter 6](code/ch06)
+* [Chapter 7](code/ch07)
+* [Chapter 8](code/ch08)

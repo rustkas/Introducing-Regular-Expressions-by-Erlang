@@ -1,4 +1,4 @@
-ex01_maching_unicode
+ex01_quontifiers
 =====
 
 ## Create new project
@@ -14,6 +14,4 @@ ex01_maching_unicode
 ## EUnit
 -----
 	$ rebar3 eunit
-	$ rebar3 eunit -m maching_unicode_tests
-	$ escript e:/rebar3/rebar3 eunit -m maching_unicode_tests
-	$ rebar3 eunit -m maching_unicode_character_properties_tests
+	$ rebar3 eunit -m quontifiers_tests

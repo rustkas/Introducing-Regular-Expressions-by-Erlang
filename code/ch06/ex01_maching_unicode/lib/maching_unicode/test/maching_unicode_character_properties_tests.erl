@@ -1,8 +1,6 @@
 % For research For research mode, activate the RESEARCH constant.
 %
--module(maching_unicode_tests).
-
--export([read_voltaire/0, read_basho/0]).
+-module(maching_unicode_character_properties_tests).
 
 %-define(RESEARCH, true).
 
@@ -21,109 +19,104 @@ read_local_file(FileName) ->
 
     String.
 
-read_voltaire() ->
-    String = read_local_file("voltaire.txt"),
-    String.
-
-read_basho() ->
-    String = read_local_file("basho.txt"),
+read_schiller() ->
+    String = read_local_file("schiller.txt"),
     String.
 
 -ifdef(RESEARCH).
 
 research_test() ->
-    FileContent = read_voltaire(),
-    Regex = "\\351",
+    FileContent = read_schiller(),
+    Regex = "\\Cf",
     %?debugFmt("FileContent = ~ts~n", [FileContent]),
     {ok, MP} = re:compile(Regex, [unicode]),
     {match, [Result]} = re:run(FileContent, MP, [{capture, all, list}]),
-    ?debugFmt("Found! = ~ts~n", [Result]).
+    ?debugFmt("Found! = ~i~n", [hd(Result)]).
 
 -else.
 
-voltaire_test_() ->
+schiller_test_() ->
     {foreach,
      local,
-     fun read_voltaire/0,
-     [fun voltaire_01/1, fun voltaire_02/1, fun voltaire_03/1, fun voltaire_04/1]}.
+     fun read_schiller/0,
+     [fun schiller_01/1,
+      fun schiller_02/1,
+      fun schiller_03/1,
+      fun schiller_04/1,
+      fun schiller_05/1,
+      fun schiller_06/1,
+      fun schiller_07/1,
+      fun schiller_08/1,
+      fun schiller_09/1]}.
 
-basho_test_() ->
-    {foreach,
-     local,
-     fun read_basho/0,
-     [fun basho_01/1,
-      fun basho_02/1,
-      fun basho_03/1,
-      fun basho_04/1,
-      fun basho_05/1,
-      fun basho_06/1]}.
-
-voltaire_01(FileContent) ->
-    Expected = "é",
-    Regex = "é",
+% Find a letter
+schiller_01(FileContent) ->
+    Expected = "A",
+    Regex = "\\pL",
     {ok, MP} = re:compile(Regex, [unicode]),
     {match, [Result]} = re:run(FileContent, MP, [{capture, all, list}]),
     ?_assertEqual(Expected, Result).
 
-voltaire_02(FileContent) ->
-    Expected = "é",
-    Regex = "\\xE9",
+% Find lower case letter
+schiller_02(FileContent) ->
+    Expected = "n",
+    Regex = "\\p{Ll}",
     {ok, MP} = re:compile(Regex, [unicode]),
     {match, [Result]} = re:run(FileContent, MP, [{capture, all, list}]),
     ?_assertEqual(Expected, Result).
 
-voltaire_03(FileContent) ->
-    Expected = "é",
-    Regex = "\\xe9",
+% Find upper case letter
+schiller_03(FileContent) ->
+    Expected = "A",
+    Regex = "\\p{Lu}",
     {ok, MP} = re:compile(Regex, [unicode]),
     {match, [Result]} = re:run(FileContent, MP, [{capture, all, list}]),
     ?_assertEqual(Expected, Result).
 
-voltaire_04(FileContent) ->
-    Expected = "é",
-    Regex = "\\351",
+% Find non letter
+schiller_04(FileContent) ->
+    Expected = " ",
+    Regex = "\\PL",
     {ok, MP} = re:compile(Regex, [unicode]),
     {match, [Result]} = re:run(FileContent, MP, [{capture, all, list}]),
     ?_assertEqual(Expected, Result).
 
-basho_01(FileContent) ->
-    Expected = "池",
-    Regex = "池",
+% Find non letter
+schiller_05(FileContent) ->
+    Expected = "A",
+    Regex = "\\P{Ll}",
     {ok, MP} = re:compile(Regex, [unicode]),
     {match, [Result]} = re:run(FileContent, MP, [{capture, all, list}]),
     ?_assertEqual(Expected, Result).
 
-basho_02(FileContent) ->
-    Expected = "池",
-    Regex = "\\x{6C60}",
+% Find non letter
+schiller_06(FileContent) ->
+    Expected = "n",
+    Regex = "\\P{Lu}",
     {ok, MP} = re:compile(Regex, [unicode]),
     {match, [Result]} = re:run(FileContent, MP, [{capture, all, list}]),
     ?_assertEqual(Expected, Result).
 
-basho_03(FileContent) ->
-    Expected = "—",
-    Regex = "—",
+% Find other
+schiller_07(FileContent) ->
+    Expected = "A",
+    Regex = "\\C",
     {ok, MP} = re:compile(Regex, [unicode]),
     {match, [Result]} = re:run(FileContent, MP, [{capture, all, list}]),
     ?_assertEqual(Expected, Result).
 
-basho_04(FileContent) ->
-    Expected = "—",
-    Regex = "\\x{2014}",
+        % Find other
+
+schiller_08(FileContent) ->
+    Expected = "sc",
+    Regex = "\\Cc",
     {ok, MP} = re:compile(Regex, [unicode]),
     {match, [Result]} = re:run(FileContent, MP, [{capture, all, list}]),
     ?_assertEqual(Expected, Result).
 
-basho_05(FileContent) ->
-    Expected = "–",
-    Regex = "–",
-    {ok, MP} = re:compile(Regex, [unicode]),
-    {match, [Result]} = re:run(FileContent, MP, [{capture, all, list}]),
-    ?_assertEqual(Expected, Result).
-
-basho_06(FileContent) ->
-    Expected = "–",
-    Regex = "\\x{2013}",
+schiller_09(FileContent) ->
+    Expected = "rf",
+    Regex = "\\Cf",
     {ok, MP} = re:compile(Regex, [unicode]),
     {match, [Result]} = re:run(FileContent, MP, [{capture, all, list}]),
     ?_assertEqual(Expected, Result).
