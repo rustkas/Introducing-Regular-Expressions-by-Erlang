@@ -234,7 +234,7 @@ converter(FileContent) ->
     AddEndTagsContent = AddEndTags(ReplaceEmtpyLinesContent),
     InsertHeadContent = InsertHead(AddEndTagsContent),
 
-    NewFileName = "new_rime.txt",
+    NewFileName = "new_rime.html",
     NewFilePath = file_path(NewFileName),
     NewContent = InsertHeadContent,
     Result = file:write_file(NewFilePath, NewContent),

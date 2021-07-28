@@ -20,7 +20,7 @@ main(_) ->
     AddEndTagsContent = add_end_tags(ReplaceEmtpyLinesContent),
     InsertHeadContent = insert_head(AddEndTagsContent),
 
-    NewFileName = "new_rime.txt",
+    NewFileName = "new_rime.html",
     NewFilePath = file_path(NewFileName),
     NewContent = InsertHeadContent,
     file:write_file(NewFilePath, NewContent),
