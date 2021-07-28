@@ -59,7 +59,20 @@ lorem_test_() ->
      [fun lorem_01/1, fun lorem_02/1, fun lorem_03/1]}.
 
 rime_test_() ->
-    {foreach, local, fun read_rime/0, [fun converter/1]}.
+    {foreach,
+     local,
+     fun read_rime/0,
+     [fun converter/1,
+      fun make_title/1,
+      fun insert_title/1,
+      fun add_h2/1,
+      fun add_markup/1,
+      fun mark_specific_paragraph/1,
+      fun start_paragraph/1,
+      fun add_br/1,
+      fun end_paragraph/1,
+      fun replace_emtpy_lines/1,
+      fun add_end_tags/1]}.
 
 % Start-tags
 lorem_01(FileContent) ->

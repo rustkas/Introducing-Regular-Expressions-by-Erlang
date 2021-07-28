@@ -1,4 +1,4 @@
--module(mylib).
+-module(rime_html_builder).
 
 %% API exports
 -export([main/1]).
@@ -8,12 +8,10 @@
 %%====================================================================
 
 %% escript Entry point
-main(Args) ->
-    
-	
-	FileContent = read_rime(),
-	
-	Add_h2Content = add_h2(FileContent),
+main(_) ->
+    FileContent = read_rime(),
+
+    Add_h2Content = add_h2(FileContent),
     MarkSpecificParagraphContent = mark_specific_paragraph(Add_h2Content),
     StartParagraphContent = start_paragraph(MarkSpecificParagraphContent),
     Add_br_Content = add_br(StartParagraphContent),
@@ -21,12 +19,12 @@ main(Args) ->
     ReplaceEmtpyLinesContent = replace_emtpy_lines(EndParagraphContent),
     AddEndTagsContent = add_end_tags(ReplaceEmtpyLinesContent),
     InsertHeadContent = insert_head(AddEndTagsContent),
-	
-	NewFileName = "new_rime.txt",
+
+    NewFileName = "new_rime.txt",
     NewFilePath = file_path(NewFileName),
     NewContent = InsertHeadContent,
     file:write_file(NewFilePath, NewContent),
-	
+
     erlang:halt(0).
 
 %%====================================================================
