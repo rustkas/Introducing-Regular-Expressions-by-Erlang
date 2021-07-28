@@ -30,8 +30,6 @@ research_test() ->
     Regex = "7*",
     {ok, MP} = re:compile(Regex, [multiline]),
     {match, [Captured]} = re:run(FileContent, MP, [notempty, {capture, all, list}]),
-    %Count = length(Captured),
-    %Result = Count,
     Result = Captured,
     ?debugFmt("Found! = ~p~n", [Result]).
 

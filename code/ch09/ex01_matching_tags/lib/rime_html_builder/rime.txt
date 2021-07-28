@@ -1,19 +1,4 @@
-
-	<!DOCTYPE html>
-
-    <html lang="en">
-
-			<head>
-
-					<title>The Rime of the Ancyent Marinere (1798)</title>
-
-					<meta charset="utf-8"/>
-
-    </head>
-
-	<body>
-
-	THE RIME OF THE ANCYENT MARINERE, IN SEVEN PARTS.
+THE RIME OF THE ANCYENT MARINERE, IN SEVEN PARTS.
 
 ARGUMENT.
 
@@ -714,7 +699,7 @@ VII.
        Which slopes down to the Sea.
      How loudly his sweet voice he rears!
      He loves to talk with Marineres
-       That come from a far Contrée.
+       That come from a far ContrÃ©e.
 
      He kneels at morn and noon and eve--
        He hath a cushion plump:
@@ -778,7 +763,7 @@ VII.
      "Ha! ha!" quoth he--"full plain I see,
        "The devil knows how to row."
 
-     And now all in mine own Countrée
+     And now all in mine own CountrÃ©e
        I stood on the firm land!
      The Hermit stepp'd forth from the boat,
        And scarcely he could stand.

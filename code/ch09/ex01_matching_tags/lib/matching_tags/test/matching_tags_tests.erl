@@ -4,7 +4,7 @@
 
 -export([read_rime/0, read_lorem/0]).
 
--define(RESEARCH, true).
+%-define(RESEARCH, true).
 
 %%
 %% Tests
@@ -36,22 +36,19 @@ read_lorem() ->
 
 research_test() ->
     FileContent = read_rime(),
-    Regex = "(^.*$)",
-    
-    Markup =
-        "
-\t<!DOCTYPE html>\n
-    <html lang=\"en\">\n
-\t	\t<head>\n
-\t		\t\t<title>&</title>\n
-\t		\t\t<meta charset=\"utf-8\"/>\n
-    </head>\n
-\t<body>\n
-<h1>&<\h1>
-\t",
+    Regex = "(^([ ]*)(He rose the morrow morn.)$)",
+    Markup = "&</body></html>",
     NewContent =
-        re:replace(FileContent, Regex, Markup, [multiline,{return, list}]),
-?debugFmt("NewContent = ~p~n", [NewContent]).
+        re:replace(FileContent,
+                   Regex,
+                   Markup,
+                   [multiline, global, dollar_endonly, {return, list}]),
+    RegexMarkup = "</body></html>",
+    {ok, MP} = re:compile(RegexMarkup),
+    {match, Captured} = re:run(NewContent, MP, [global, {capture, first, list}]),
+    Length = length(Captured),
+    _Result = Length,
+    ?debugFmt("Result = ~p~n", [NewContent]).
 
 -else.
 
@@ -59,17 +56,10 @@ lorem_test_() ->
     {foreach,
      local,
      fun read_lorem/0,
-     [
-	 fun lorem_01/1, 
-	 fun lorem_02/1, fun add_markup/1]}.
+     [fun lorem_01/1, fun lorem_02/1, fun lorem_03/1]}.
 
 rime_test_() ->
-    {foreach, local, fun read_rime/0, 
-	[
-	fun make_title/1,
-	fun insert_title/1
-	
-	]}.
+    {foreach, local, fun read_rime/0, [fun converter/1]}.
 
 % Start-tags
 lorem_01(FileContent) ->
@@ -108,8 +98,8 @@ lorem_03(FileContent) ->
     Result = SortedList,
     ?_assertEqual(Expected, Result).
 
+% Transforming Plain Text with sed
 add_markup(FileContent) ->
-    FileContent = read_lorem(),
     Expected = ok,
     Markup =
         "
@@ -121,8 +111,7 @@ add_markup(FileContent) ->
     </head>\n
 \t<body>\n
 \t",
-    FilePath = file_path("rime.txt"),
-    DirName = filename:dirname(FilePath),
+
     NewFileName = "markuped_rime.txt",
     NewFilePath = file_path(NewFileName),
 
@@ -130,6 +119,7 @@ add_markup(FileContent) ->
     Result = file:write_file(NewFilePath, NewContent),
     ?_assertEqual(Expected, Result).
 
+% Substitution with sed
 make_title(FileContent) ->
     Expected = "<title>THE RIME OF THE ANCYENT MARINERE, IN SEVEN PARTS.</title>",
     Regex = "^.*$",
@@ -138,13 +128,115 @@ make_title(FileContent) ->
     ResultTitle = sstr:concat(["<title>", Captured, "</title>"]),
     ?_assertEqual(Expected, ResultTitle).
 
+converter(FileContent) ->
+    Expected = ok,
+    InsertHead =
+        fun(String) ->
+           Regex = "(^.*$)",
+           Markup =
+               "<!DOCTYPE html>
+<html lang=\"en\">
+<head>
+   <title>&</title>
+      <meta charset=\"utf-8\"/>
+</head>
+<body>
+<h1>&<\h1>
+",
+           NewContent = re:replace(String, Regex, Markup, [multiline, {return, list}]),
+           NewContent
+        end,
+
+    Add_h2 =
+        fun(String) ->
+           Regex = "(^(ARGUMENT\\.|I{0,3}V?I{0,2}\\.)$)",
+           Markup = "<h2>&</h2>",
+           NewContent =
+               re:replace(String, Regex, Markup, [multiline, global, {return, list}]),
+           NewContent
+        end,
+    MarkSpecificParagraph =
+        fun(String) ->
+           Regex = "(^([A-Z][a-z].*)$)",
+           Markup = "<p>&</p>",
+           NewContent =
+               re:replace(String, Regex, Markup, [multiline, global, {return, list}]),
+           NewContent
+        end,
+
+    StartParagraph =
+        fun(String) ->
+           Regex = "(^([ ]*)(It is an ancyent Marinere,)$)",
+
+           Markup = "  <p>\\3<br/>",
+           NewContent = re:replace(String, Regex, Markup, [multiline, {return, list}]),
+           NewContent
+        end,
+
+    Add_br =
+        fun(String) ->
+           Regex = "(^ {5,7}.*$)",
+           Markup = "&<br/>",
+           NewContent =
+               re:replace(String, Regex, Markup, [multiline, global, {return, list}]),
+           NewContent
+        end,
+
+    EndParagraph =
+        fun(String) ->
+           Regex = "(<br/>\\Z)",
+           Markup = "\r</p>",
+           NewContent =
+               re:replace(String, Regex, Markup, [multiline, global, {return, list}]),
+           NewContent
+        end,
+
+    ReplaceEmtpyLines =
+        fun(String) ->
+           Regex = "(^$)",
+           Markup = "<br/>",
+           NewContent =
+               re:replace(String,
+                          Regex,
+                          Markup,
+                          [multiline, global, {offset, 490}, {return, list}]),
+           NewContent
+        end,
+
+    AddEndTags =
+        fun(String) ->
+           Regex = "(</p>\\Z)",
+           Markup = "&\r</body>\r</html>",
+           NewContent =
+               re:replace(String, Regex, Markup, [multiline, global, {return, list}]),
+           NewContent
+        end,
+
+    Add_h2Content = Add_h2(FileContent),
+    MarkSpecificParagraphContent = MarkSpecificParagraph(Add_h2Content),
+    StartParagraphContent = StartParagraph(MarkSpecificParagraphContent),
+    Add_br_Content = Add_br(StartParagraphContent),
+    EndParagraphContent = EndParagraph(Add_br_Content),
+    ReplaceEmtpyLinesContent = ReplaceEmtpyLines(EndParagraphContent),
+    AddEndTagsContent = AddEndTags(ReplaceEmtpyLinesContent),
+    InsertHeadContent = InsertHead(AddEndTagsContent),
+
+    NewFileName = "new_rime.txt",
+    NewFilePath = file_path(NewFileName),
+    NewContent = InsertHeadContent,
+    Result = file:write_file(NewFilePath, NewContent),
+
+    Result = ok,
+    ?_assertEqual(Expected, Result).
+
+% Substitution with sed
 insert_title(FileContent) ->
-    Regex = "(^.*$)",
     Expected = 2,
+    Regex = "(^.*$)",
     {ok, MP} = re:compile(Regex, [multiline]),
     {match, [Captured]} = re:run(FileContent, MP, [{capture, first, list}]),
 
-Markup =
+    Markup =
         "
 \t<!DOCTYPE html>\n
     <html lang=\"en\">\n
@@ -156,7 +248,7 @@ Markup =
 <h1>&<\h1>
 \t",
     NewContent =
-        re:replace(FileContent, Regex, Markup, [global,{return, list}]),
+        re:replace(FileContent, Regex, Markup, [multiline, {return, list}]),
     RegexString = Captured,
     {ok, MP_String} = re:compile(RegexString, [multiline]),
     {match, CapturedStringList} =
@@ -165,23 +257,117 @@ Markup =
     Result = Length,
     ?_assertEqual(Expected, Result).
 
-
-
-add_h2(FileContent)->
-    Expected = 10,
-    
-	Regex = "(^(ARGUMENT\\.|I{0,3}V?I{0,2}\\.)$)",
+% Handling Roman Numerals with sed
+add_h2(FileContent) ->
+    Expected = 8,
+    Regex = "(^(ARGUMENT\\.|I{0,3}V?I{0,2}\\.)$)",
     Markup = "<h2>&</h2>",
-NewContent =
-        re:replace(FileContent, Regex, Markup, [global, {return, list}]),
-?debugFmt("NewContent = ~p~n", [NewContent]),
-RegexMarkup = "<h2>.+</h2>",
-{ok, MP} = re:compile(RegexMarkup, [multiline]),
-{match, Captured} = re:run(NewContent, MP, [global, {capture, all, list}]),
-?debugFmt("Captured = ~p~n", [Captured]),
+    NewContent =
+        re:replace(FileContent, Regex, Markup, [multiline, global, {return, list}]),
+    RegexMarkup = "<(h2)>.*?</\\1>",
+
+    {ok, MP} = re:compile(RegexMarkup),
+    {match, Captured} = re:run(NewContent, MP, [global, {capture, first, list}]),
+
     Length = length(Captured),
     Result = Length,
-	?_assertEqual(Expected, Result).
+    ?_assertEqual(Expected, Result).
+
+% Handling a Specific Paragraph with sed
+mark_specific_paragraph(FileContent) ->
+    Expected = 1,
+    Regex = "(^([A-Z][a-z].*)$)",
+    Markup = "<p>&</p>",
+    NewContent =
+        re:replace(FileContent, Regex, Markup, [multiline, global, {return, list}]),
+
+    RegexMarkup = "<(p)>.*?</\\1>",
+    {ok, MP} = re:compile(RegexMarkup),
+    {match, Captured} = re:run(NewContent, MP, [global, {capture, first, list}]),
+    %?debugFmt("~p~n",[Captured]),
+    Length = length(Captured),
+    Result = Length,
+    ?_assertEqual(Expected, Result).
+
+% Handling the Lines of the Poem with sed
+% after prepending a few spaces, it inserts a p start-tag
+start_paragraph(FileContent) ->
+    Expected = 1,
+    Regex = "(^([ ]*)(It is an ancyent Marinere,)$)",
+
+    Markup = "  <p>\\3",
+    NewContent =
+        re:replace(FileContent, Regex, Markup, [multiline, {return, list}]),
+    RegexMarkup = "<p>",
+    {ok, MP} = re:compile(RegexMarkup),
+    {match, Captured} = re:run(NewContent, MP, [global, {capture, first, list}]),
+    %?debugFmt("~p~n",[Captured]),
+    Length = length(Captured),
+    Result = Length,
+    ?_assertEqual(Expected, Result).
+
+% Handling the Lines of the Poem with sed
+% every line that begins with between 5 to 7 spaces gets a br appended to it.
+add_br(FileContent) ->
+    Expected = 660,
+    Regex = "(^ {5,7}.*$)",
+    Markup = "&<br/>",
+    NewContent =
+        re:replace(FileContent, Regex, Markup, [multiline, global, {return, list}]),
+    RegexMarkup = "<br/>",
+    {ok, MP} = re:compile(RegexMarkup),
+    {match, Captured} = re:run(NewContent, MP, [global, {capture, first, list}]),
+    Length = length(Captured),
+    Result = Length,
+    ?_assertEqual(Expected, Result).
+
+% Handling the Lines of the Poem with sed
+% the last line of the poem, instead of a br, the s appends a p end-tag
+end_paragraph(FileContent) ->
+    Expected = 1,
+    Regex = "(^([ ]*)(He rose the morrow morn.)$)",
+    Markup = "&</p>",
+    NewContent =
+        re:replace(FileContent, Regex, Markup, [multiline, global, {return, list}]),
+    RegexMarkup = "</p>",
+    {ok, MP} = re:compile(RegexMarkup),
+    {match, Captured} = re:run(NewContent, MP, [global, {capture, first, list}]),
+    Length = length(Captured),
+    Result = Length,
+    ?_assertEqual(Expected, Result).
+
+% Handling the Lines of the Poem with sed
+% Replace the blank lines with a br, to keep the verses separated.
+replace_emtpy_lines(FileContent) ->
+    Expected = 161,
+    Regex = "(^$)",
+    Markup = "<br/>",
+    NewContent =
+        re:replace(FileContent, Regex, Markup, [multiline, global, {return, list}]),
+    RegexMarkup = "<br/>",
+    {ok, MP} = re:compile(RegexMarkup),
+    {match, Captured} = re:run(NewContent, MP, [global, {capture, first, list}]),
+    Length = length(Captured),
+    Result = Length,
+    ?_assertEqual(Expected, Result).
+
+% Handling the Lines of the Poem with sed
+% append some tags to the end of the poem
+add_end_tags(FileContent) ->
+    Expected = 1,
+    Regex = "(^([ ]*)(He rose the morrow morn.)$)",
+    Markup = "&</body></html>",
+    NewContent =
+        re:replace(FileContent,
+                   Regex,
+                   Markup,
+                   [multiline, global, dollar_endonly, {return, list}]),
+    RegexMarkup = "</body></html>",
+    {ok, MP} = re:compile(RegexMarkup),
+    {match, Captured} = re:run(NewContent, MP, [global, {capture, first, list}]),
+    Length = length(Captured),
+    Result = Length,
+    ?_assertEqual(Expected, Result).
 
 -endif.
 -endif.
