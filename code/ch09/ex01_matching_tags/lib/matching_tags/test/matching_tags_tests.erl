@@ -42,7 +42,7 @@ research_test() ->
         re:replace(FileContent,
                    Regex,
                    Markup,
-                   [multiline, global, dollar_endonly, {return, list}]),
+                   [multiline, global, {return, list}]),
     RegexMarkup = "</body></html>",
     {ok, MP} = re:compile(RegexMarkup),
     {match, Captured} = re:run(NewContent, MP, [global, {capture, first, list}]),
